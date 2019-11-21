@@ -81,10 +81,10 @@ char* Round(char* ary, int max_point)
 		//temp2[strlen(temp)+1] = '\0';
 		return temp2;
 	}
-	else if (temp[0] <= 47)
+	else if (temp[0] <= 48)
 	{
 		char * temp2 = (char*)malloc(strlen(temp));
-		for (int i = 0; i < strlen(temp2); i++)
+		for (int i = 0; i < strlen(temp)-1; i++)
 			temp2[i] = temp[i+1];
 		return temp2;
 	}
@@ -139,7 +139,7 @@ void Array_Sum(char* a)
 			for (int i = 1; max_point - i > -1; i++)
 			{
 				if ((first_point - i > -1) && (second_point - i > -1))
-					temp[max_point - i] = (first_Num[first_point - i] + second_Num[second_point - i]) - 48;
+					temp[max_point - i] = first_Num[first_point - i] + (second_Num[second_point - i] - 48);
 				else if (first_point - i > -1)
 					temp[max_point - i] = first_Num[first_point - i];
 				else if (second_point - i > -1)
@@ -149,7 +149,7 @@ void Array_Sum(char* a)
 			for (int i = 0; i < max_point_num; i++)
 			{
 				if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
-					temp[max_point + i + 1] = (first_Num[first_point + i + 1] + second_Num[second_point + i + 1]) - 48;
+					temp[max_point + i + 1] = first_Num[first_point + i + 1] + (second_Num[second_point + i + 1] - 48);
 				else if (first_point + i + 1 < first_count)
 					temp[max_point + i + 1] = first_Num[first_point + i + 1];
 				else if (second_point + i + 1 < second_count)
@@ -193,7 +193,7 @@ void Array_Sum(char* a)
 		free(first_Num);
 		free(second_Num);
 		total = Round(temp, max_point);
-		printf("%s\n", total);
+		free(temp);
 		//printf("%s\n", total);
 		first_Num = (char*)malloc(strlen(total) + 1);
 		strcpy(first_Num, total);
@@ -212,7 +212,7 @@ void Array_Sum(char* a)
 			//break;
 		first_Num[strlen(first_Num)] = '\0';
 		//printf("%s\n", first_Num);
-		free(temp);
+		//free(temp);
 		first_count = strlen(first_Num);
 		second_count = Operator_Count(Num);
 		//Num += second_count;
