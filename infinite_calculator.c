@@ -78,7 +78,7 @@ char* Round(char* ary, int max_point)
 			temp2[1] -= 10;
 			temp2[0]++;
 		}
-		//temp2[strlen(temp)+1] = '\0';
+		temp2[strlen(temp)+1] = '\0';
 		return temp2;
 	}
 	else if (temp[0] <= 48)
@@ -86,6 +86,7 @@ char* Round(char* ary, int max_point)
 		char * temp2 = (char*)malloc(strlen(temp));
 		for (int i = 0; i < strlen(temp)-1; i++)
 			temp2[i] = temp[i+1];
+		temp2[strlen(temp)-1] = '\0';
 		return temp2;
 	}
 	else
