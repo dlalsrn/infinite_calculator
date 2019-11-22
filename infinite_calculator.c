@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#pragma warning(disable:4996)
 int Operator_Count(char* ary)
 {
 	int index;
@@ -22,9 +21,6 @@ char* Change_str(char* a)
 {
 	int cnt = 0;
 	int point = 0;
-	//printf("%s\n", a);
-
-	//printf("%s\n", a);
 	for (int i = 0; i < strlen(a); i++)
 	{
 		if (a[i] == '.')
@@ -155,7 +151,6 @@ char* Clear(char* a)
 		temp[i] = '\0';
 	if (temp[i] == '.')
 		temp[i] = '\0';
-	//printf("%ld\n", strlen(temp));
 	return temp;
 }
 
@@ -166,12 +161,13 @@ void Array_Sum(char* a)
 	char* total;
 	char sign; // 부호 변수
 	char* change = Change_str(a);
-	//printf("%s\n", change);
-	//printf("%s\n", change);
+	printf("%s\n", change);
 	int count = strlen(change);
+	
 	char* Num = (char*)malloc(count + 1);
 	strcpy(Num, change);
-	 
+	Num[strlen(Num)] = '\0';
+	printf("%s\n", Num);
 	if (Num[0] == '-')
 	{
 		sign = '-';
@@ -191,29 +187,22 @@ void Array_Sum(char* a)
 	char* second_Num = (char*)malloc(second_count + 1);
 	strncpy(second_Num, Num, second_count);
 	second_Num[second_count] = '\0';
-
+	//printf("%s\n", Num);
 	Num += second_count;
-	//printf("%s\n%s\n", first_Num, second_Num);
-	//int cnt = 0;
+	//printf("%s\n", Num);
 	while (1)
 	{
 		int first_point = Find_Point(first_Num);
 		int second_point = Find_Point(second_Num);
-		//printf("%d %d\n", first_point, second_point);
-
-		//int first_temp = first_point, second_temp = second_point;
-
 		int first_integer = first_count - (first_count - first_point);
 		int second_integer = second_count - (second_count - second_point);
 		int max_integer = (first_count - (first_count - first_point)) > (second_count - (second_count - second_point)) ? first_count - (first_count - first_point) : second_count - (second_count - second_point);
 		int max_point = first_point > second_point ? first_point : second_point;
 		int max_point_num = first_count - first_point - 1 > second_count - second_point - 1 ? first_count - first_point - 1 : second_count - second_point - 1;
-		//printf("%d %d\n", max_integer, max_point_num);
 		temp = (char*)malloc(max_integer + max_point + 2);
 
 		temp[max_point] = '.';
-		//printf("시작\n");
-		//printf("%s\n%s\n%c %c\n", first_Num, second_Num, sign, oper);
+		printf("첫 번째 수 : %s\n두 번째 수 : %s\n첫 수의 부호 : %c 연산자 : %c\n", first_Num, second_Num, sign, oper);
 		if (oper == '+')
 		{
 			if (sign == '+')
@@ -226,7 +215,6 @@ void Array_Sum(char* a)
 						temp[max_point - i] = first_Num[first_point - i];
 					else if (second_point - i > -1)
 						temp[max_point - i] = second_Num[second_point - i];
-					//printf("%c\n", temp[max_point - i]);
 				}
 				for (int i = 0; i < max_point_num; i++)
 				{
@@ -236,7 +224,6 @@ void Array_Sum(char* a)
 						temp[max_point + i + 1] = first_Num[first_point + i + 1];
 					else if (second_point + i + 1 < second_count)
 						temp[max_point + i + 1] = second_Num[second_point + i + 1];
-					//printf("%c\n", temp[max_point + i + 1]);
 				}
 			}
 			else // - +
@@ -249,10 +236,6 @@ void Array_Sum(char* a)
                     		temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48); 
                 		else if (second_point - i > -1) 
                     		temp[max_point - i] = second_Num[second_point - i]; 
-                		//else if (second_point - i > -1) 
-						//{
-                   			// temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                			//printf("%c\n", temp[max_point - i]);
             		}   
             		for (int i = 0; i < max_point_num; i++)
             		{   	
@@ -270,7 +253,6 @@ void Array_Sum(char* a)
 								temp[max_point + i]--;
 							}
 						}
-              	  		//printf("%c\n", temp[max_point + i + 1]);
             		}
 					sign = '+';
 				}
@@ -282,10 +264,6 @@ void Array_Sum(char* a)
                             temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48); 
                         else if (first_point - i > -1) 
                             temp[max_point - i] = first_Num[first_point - i]; 
-                        //else if (second_point - i > -1) 
-                        //{
-                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                            //printf("%c\n", temp[max_point - i]);
                     }
                     for (int i = 0; i < max_point_num; i++)
                     {    
@@ -303,7 +281,6 @@ void Array_Sum(char* a)
                                 temp[max_point + i]--;
                             }
                         }
-                        //printf("%c\n", temp[max_point + i + 1]);
                     }
 					sign = '-';
 				}
@@ -317,10 +294,6 @@ void Array_Sum(char* a)
                                 temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48);
                             else if (second_point - i > -1)
                                 temp[max_point - i] = second_Num[second_point - i];
-                            //else if (second_point - i > -1) 
-                            //{
-                                // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                                //printf("%c\n", temp[max_point - i]);
                         }
                         for (int i = 0; i < max_point_num; i++)
                         {
@@ -338,7 +311,6 @@ void Array_Sum(char* a)
                                     temp[max_point + i]--;
                                 }
                             }
-                            //printf("%c\n", temp[max_point + i + 1]);
                         }
                         sign = '+';
                     }
@@ -350,10 +322,6 @@ void Array_Sum(char* a)
                                 temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48);
                             else if (first_point - i > -1)
                                 temp[max_point - i] = first_Num[first_point - i];
-                            //else if (second_point - i > -1) 
-                            //{
-                                // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                                //printf("%c\n", temp[max_point - i]);
                         }
                         for (int i = 0; i < max_point_num; i++)
                         {
@@ -371,7 +339,6 @@ void Array_Sum(char* a)
                                     temp[max_point + i]--;
                                 }
                             }
-                            //printf("%c\n", temp[max_point + i + 1]);
                         }
                         sign = '-';
 					}
@@ -390,7 +357,6 @@ void Array_Sum(char* a)
                         temp[max_point - i] = first_Num[first_point - i];
                     else if (second_point - i > -1)
                         temp[max_point - i] = second_Num[second_point - i];
-                    //printf("%c\n", temp[max_point - i]);
                 }
                 for (int i = 0; i < max_point_num; i++)
                 {
@@ -400,7 +366,6 @@ void Array_Sum(char* a)
                         temp[max_point + i + 1] = first_Num[first_point + i + 1];
                     else if (second_point + i + 1 < second_count)
                         temp[max_point + i + 1] = second_Num[second_point + i + 1];
-                    //printf("%c\n", temp[max_point + i + 1]);
                 }
 			}
 			else
@@ -413,10 +378,6 @@ void Array_Sum(char* a)
                             temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48);
                         else if (second_point - i > -1)
                             temp[max_point - i] = second_Num[second_point - i];
-                        //else if (second_point - i > -1) 
-                        //{
-                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                            //printf("%c\n", temp[max_point - i]);
                     }
                     for (int i = 0; i < max_point_num; i++)
                     {
@@ -434,7 +395,6 @@ void Array_Sum(char* a)
                                 temp[max_point + i]--;
                             }
                         }
-                        //printf("%c\n", temp[max_point + i + 1]);
                     }
                     sign = '-';
                 }
@@ -446,10 +406,6 @@ void Array_Sum(char* a)
                             temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48);
                         else if (first_point - i > -1)
                             temp[max_point - i] = first_Num[first_point - i];
-                        //else if (second_point - i > -1) 
-                        //{
-                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                            //printf("%c\n", temp[max_point - i]);
                     }
                     for (int i = 0; i < max_point_num; i++)
                     {
@@ -467,7 +423,6 @@ void Array_Sum(char* a)
                                 temp[max_point + i]--;
                             }
                         }
-                        //printf("%c\n", temp[max_point + i + 1]);
                     }
                     sign = '+';
 				}
@@ -481,10 +436,6 @@ void Array_Sum(char* a)
                             	temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48);
                         	else if (second_point - i > -1)
                             	temp[max_point - i] = second_Num[second_point - i];
-                        	//else if (second_point - i > -1) 
-                        	//{
-                            	// temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                            	//printf("%c\n", temp[max_point - i]);
                     	}
                     	for (int i = 0; i < max_point_num; i++)
                     	{
@@ -502,7 +453,6 @@ void Array_Sum(char* a)
                                 	temp[max_point + i]--;
                             	}
                         	}
-                        	//printf("%c\n", temp[max_point + i + 1]);
                     	}
                     	sign = '-';
 					}
@@ -514,10 +464,6 @@ void Array_Sum(char* a)
                             	temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48);
                         	else if (first_point - i > -1)
                             	temp[max_point - i] = first_Num[first_point - i];
-                        	//else if (second_point - i > -1) 
-                        	//{
-                            	// temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                           		//printf("%c\n", temp[max_point - i]);
                     	}
                     	for (int i = 0; i < max_point_num; i++)
                     	{
@@ -535,7 +481,6 @@ void Array_Sum(char* a)
                                 	temp[max_point + i]--;
                             	}
                         	}
-                        	//printf("%c\n", temp[max_point + i + 1]);
                     	}
                     	sign = '+';
 					}
@@ -543,19 +488,16 @@ void Array_Sum(char* a)
 			}
 		}
 		temp[max_integer + max_point_num + 1] = '\0';
-		//printf("%s\n", temp);
+		printf("합 : %c%s\n", sign, temp);
 		free(first_Num);
 		free(second_Num);
 		total = Round(temp, max_point);
-		//printf("%s\n", total);
 		free(temp);
-		//printf("%s\n", total);
 		first_Num = (char*)malloc(strlen(total) + 1);
 		strcpy(first_Num, total);
 		free(total);
 		if (*Num == '\0')
 		{
-			//printf("%s\n", first_Num);
 			total = Clear(first_Num);
 			if (sign == '-')
 				printf("%c%s\n", sign, total);
@@ -568,26 +510,14 @@ void Array_Sum(char* a)
 			oper = *Num;
 			Num += 1;
 		}
-		//printf("%s\n", Num);
-		//if (Num == NULL)
-			//break;
 		first_Num[strlen(first_Num)] = '\0';
-		//printf("%s\n", first_Num);
-		//free(temp);
 		first_count = strlen(first_Num);
 		second_count = Operator_Count(Num);
-		//Num += second_count;
 		second_Num = (char*)malloc(second_count + 1);
-		//printf("%d %d\n", first_count, second_count);
-		//strcpy(second_Num, Num);
 		strncpy(second_Num, Num, second_count);
-
+		second_Num[second_count] = '\0';
 		Num += second_count;
-		//printf("%s\n%s\n", first_Num, second_Num);
 	}
-	//printf("%s\n", first_Num);
-	//char* total = Round(first_Num);
-	//printf("%s\n", total);
 }
 
 int main(int argc, char* argv[])
