@@ -29,7 +29,7 @@ char* Round(char* ary, int max_point)
 
 		if(temp[i] >= 58)
 		{
-			if (temp[i - 1] == '.')
+			if (temp[i - 1] == '.' && i - 1 == max_point)
 			{
 				while (temp[i] >= 58)
 				{
@@ -48,7 +48,7 @@ char* Round(char* ary, int max_point)
 		}
 		else if (temp[i] <= 47)
 		{
-			if (temp[i - 1] == '.')
+			if (temp[i - 1] == '.' && i - 1 == max_point)
 			{
 				while (temp[i] <= 47)
 				{
@@ -95,12 +95,20 @@ char* Round(char* ary, int max_point)
 void Array_Sum(char* a)
 {
 	char* temp;
-	char oper;
+	char oper; // 연산자 저장 변수
 	char* total;
+	char sign; // 부호 변수
 	int count = strlen(a);
 	char* Num = (char*)malloc(count + 1);
 	strcpy(Num, a);
-	
+	 
+	if (Num[0] == '-')
+	{
+		sign = '-';
+		Num++;
+	}
+	else
+		sign = '+';
 	int first_count = Operator_Count(Num);
 	char* first_Num = (char*)malloc(first_count + 1);
 	strncpy(first_Num, Num, first_count);
@@ -137,60 +145,200 @@ void Array_Sum(char* a)
 		//printf("시작\n");
 		if (oper == '+')
 		{
-			for (int i = 1; max_point - i > -1; i++)
+			if (sign == '+')
 			{
-				if ((first_point - i > -1) && (second_point - i > -1))
-					temp[max_point - i] = first_Num[first_point - i] + (second_Num[second_point - i] - 48);
-				else if (first_point - i > -1)
-					temp[max_point - i] = first_Num[first_point - i];
-				else if (second_point - i > -1)
-					temp[max_point - i] = second_Num[second_point - i];
-				//printf("%c\n", temp[max_point - i]);
+				for (int i = 1; max_point - i > -1; i++)
+				{
+					if ((first_point - i > -1) && (second_point - i > -1))
+						temp[max_point - i] = first_Num[first_point - i] + (second_Num[second_point - i] - 48);
+					else if (first_point - i > -1)
+						temp[max_point - i] = first_Num[first_point - i];
+					else if (second_point - i > -1)
+						temp[max_point - i] = second_Num[second_point - i];
+					//printf("%c\n", temp[max_point - i]);
+				}
+				for (int i = 0; i < max_point_num; i++)
+				{
+					if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+						temp[max_point + i + 1] = first_Num[first_point + i + 1] + (second_Num[second_point + i + 1] - 48);
+					else if (first_point + i + 1 < first_count)
+						temp[max_point + i + 1] = first_Num[first_point + i + 1];
+					else if (second_point + i + 1 < second_count)
+						temp[max_point + i + 1] = second_Num[second_point + i + 1];
+					//printf("%c\n", temp[max_point + i + 1]);
+				}
 			}
-			for (int i = 0; i < max_point_num; i++)
+			else
 			{
-				if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
-					temp[max_point + i + 1] = first_Num[first_point + i + 1] + (second_Num[second_point + i + 1] - 48);
-				else if (first_point + i + 1 < first_count)
-					temp[max_point + i + 1] = first_Num[first_point + i + 1];
-				else if (second_point + i + 1 < second_count)
-					temp[max_point + i + 1] = second_Num[second_point + i + 1];
-				//printf("%c\n", temp[max_point + i + 1]);
+				if (second_integer > first_integer)
+				{
+					for (int i = 1; max_point - i > -1; i++)
+            		{   
+                		if ((first_point - i > -1) && (second_point - i > -1))
+                    		temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48); 
+                		else if (second_point - i > -1) 
+                    		temp[max_point - i] = second_Num[second_point - i]; 
+                		//else if (second_point - i > -1) 
+						//{
+                   			// temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
+                			//printf("%c\n", temp[max_point - i]);
+            		}   
+            		for (int i = 0; i < max_point_num; i++)
+            		{   	
+                		if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+                    		temp[max_point + i + 1] = second_Num[second_point + i + 1] - (first_Num[first_point + i + 1] - 48); 
+                		else if (second_point + i + 1 < second_count)
+                    		temp[max_point + i + 1] = second_Num[second_point + i + 1]; 
+                		else if (first_point + i + 1 < first_count)
+						{
+							if (first_Num[first_point + i + 1] == '0')
+								temp[max_point + i + 1] = '0';
+							else
+							{
+                    			temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
+								temp[max_point + i]--;
+							}
+						}
+              	  		//printf("%c\n", temp[max_point + i + 1]);
+            		}
+					sign = '+';
+				}
+				else if (first_integer > second_integer)
+				{
+					for (int i = 1; max_point - i > -1; i++)
+                    {
+                        if ((first_point - i > -1) && (second_point - i > -1))
+                            temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48); 
+                        else if (first_point - i > -1) 
+                            temp[max_point - i] = first_Num[first_point - i]; 
+                        //else if (second_point - i > -1) 
+                        //{
+                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
+                            //printf("%c\n", temp[max_point - i]);
+                    }
+                    for (int i = 0; i < max_point_num; i++)
+                    {    
+                        if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+                            temp[max_point + i + 1] = first_Num[first_point + i + 1] - (second_Num[second_point + i + 1] - 48); 
+                        else if (first_point + i + 1 < first_count)
+                            temp[max_point + i + 1] = first_Num[first_point + i + 1]; 
+                        else if (second_point + i + 1 < second_count)
+                        {
+                            if (second_Num[second_point + i + 1] == '0')
+                                temp[max_point + i + 1] = '0';
+                            else
+                            {
+                                temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
+                                temp[max_point + i]--;
+                            }
+                        }
+                        //printf("%c\n", temp[max_point + i + 1]);
+                    }
+					sign = '-';
+				}
+				else
+				{
+					
+				}
 			}
 		}
 		else
 		{
-			for (int i = 1; max_point - i > -1; i++)
-            {   
-                if ((first_point - i > -1) && (second_point - i > -1))
-                    temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48); 
-                else if (first_point - i > -1) 
-                    temp[max_point - i] = first_Num[first_point - i]; 
-                //else if (second_point - i > -1) 
-				//{
-                   // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
-                //printf("%c\n", temp[max_point - i]);
-            }   
-            for (int i = 0; i < max_point_num; i++)
-            {   
-                if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
-                    temp[max_point + i + 1] = first_Num[first_point + i + 1] - (second_Num[second_point + i + 1] - 48); 
-                else if (first_point + i + 1 < first_count)
-                    temp[max_point + i + 1] = first_Num[first_point + i + 1]; 
-                else if (second_point + i + 1 < second_count)
+			if (sign == '-')
+			{
+				for (int i = 1; max_point - i > -1; i++)
+                {
+                    if ((first_point - i > -1) && (second_point - i > -1))
+                        temp[max_point - i] = first_Num[first_point - i] + (second_Num[second_point - i] - 48);
+                    else if (first_point - i > -1)
+                        temp[max_point - i] = first_Num[first_point - i];
+                    else if (second_point - i > -1)
+                        temp[max_point - i] = second_Num[second_point - i];
+                    //printf("%c\n", temp[max_point - i]);
+                }
+                for (int i = 0; i < max_point_num; i++)
+                {
+                    if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+                        temp[max_point + i + 1] = first_Num[first_point + i + 1] + (second_Num[second_point + i + 1] - 48);
+                    else if (first_point + i + 1 < first_count)
+                        temp[max_point + i + 1] = first_Num[first_point + i + 1];
+                    else if (second_point + i + 1 < second_count)
+                        temp[max_point + i + 1] = second_Num[second_point + i + 1];
+                    //printf("%c\n", temp[max_point + i + 1]);
+                }
+			}
+			else
+			{
+				if (second_integer > first_integer)
+                {
+                    for (int i = 1; max_point - i > -1; i++)
+                    {
+                        if ((first_point - i > -1) && (second_point - i > -1))
+                            temp[max_point - i] = second_Num[second_point - i] - (first_Num[first_point - i] - 48);
+                        else if (second_point - i > -1)
+                            temp[max_point - i] = second_Num[second_point - i];
+                        //else if (second_point - i > -1) 
+                        //{
+                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
+                            //printf("%c\n", temp[max_point - i]);
+                    }
+                    for (int i = 0; i < max_point_num; i++)
+                    {
+                        if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+                            temp[max_point + i + 1] = second_Num[second_point + i + 1] - (first_Num[first_point + i + 1] - 48);
+                        else if (second_point + i + 1 < second_count)
+                            temp[max_point + i + 1] = second_Num[second_point + i + 1];
+                        else if (first_point + i + 1 < first_count)
+                        {
+                            if (first_Num[first_point + i + 1] == '0')
+                                temp[max_point + i + 1] = '0';
+                            else
+                            {
+                                temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
+                                temp[max_point + i]--;
+                            }
+                        }
+                        //printf("%c\n", temp[max_point + i + 1]);
+                    }
+                    sign = '-';
+                }
+				else if (first_integer > second_integer)
 				{
-					if (second_Num[second_point + i + 1] == '0')
-						temp[max_point + i + 1] = '0';
-					else
-					{
-                    	temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
-						temp[max_point + i]--;
-					}
+                    for (int i = 1; max_point - i > -1; i++)
+                    {
+                        if ((first_point - i > -1) && (second_point - i > -1))
+                            temp[max_point - i] = first_Num[first_point - i] - (second_Num[second_point - i] - 48);
+                        else if (first_point - i > -1)
+                            temp[max_point - i] = first_Num[first_point - i];
+                        //else if (second_point - i > -1) 
+                        //{
+                            // temp[max_point - i] = 58 - (second_Num[second_point - i]-48); 
+                            //printf("%c\n", temp[max_point - i]);
+                    }
+                    for (int i = 0; i < max_point_num; i++)
+                    {
+                        if ((first_point + i + 1 < first_count) && (second_point + i + 1 < second_count))
+                            temp[max_point + i + 1] = first_Num[first_point + i + 1] - (second_Num[second_point + i + 1] - 48);
+                        else if (first_point + i + 1 < first_count)
+                            temp[max_point + i + 1] = first_Num[first_point + i + 1];
+                        else if (second_point + i + 1 < second_count)
+                        {
+                            if (second_Num[second_point + i + 1] == '0')
+                                temp[max_point + i + 1] = '0';
+                            else
+                            {
+                                temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
+                                temp[max_point + i]--;
+                            }
+                        }
+                        //printf("%c\n", temp[max_point + i + 1]);
+                    }
+                    sign = '+';
 				}
-                //printf("%c\n", temp[max_point + i + 1]);
-            } 
+			}
 		}
 		temp[max_integer + max_point_num + 1] = '\0';
+		printf("%s\n", temp);
 		free(first_Num);
 		free(second_Num);
 		total = Round(temp, max_point);
@@ -200,7 +348,7 @@ void Array_Sum(char* a)
 		strcpy(first_Num, total);
 		if (*Num == '\0')
 		{
-			printf("%s\n", first_Num);
+			printf("%c%s\n", sign, first_Num);
 			break;
 		}
 		else
