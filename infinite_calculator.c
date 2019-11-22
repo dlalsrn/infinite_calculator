@@ -160,14 +160,8 @@ void Array_Sum(char* a)
 	char oper; // 연산자 저장 변수
 	char* total;
 	char sign; // 부호 변수
-	char* change = Change_str(a);
-	printf("%s\n", change);
-	int count = strlen(change);
-	
-	char* Num = (char*)malloc(count + 1);
-	strcpy(Num, change);
-	Num[strlen(Num)] = '\0';
-	printf("%s\n", Num);
+	char* Num = Change_str(a);
+
 	if (Num[0] == '-')
 	{
 		sign = '-';
@@ -175,6 +169,7 @@ void Array_Sum(char* a)
 	}
 	else
 		sign = '+';
+
 	int first_count = Operator_Count(Num);
 	char* first_Num = (char*)malloc(first_count + 1);
 	strncpy(first_Num, Num, first_count);
@@ -187,9 +182,8 @@ void Array_Sum(char* a)
 	char* second_Num = (char*)malloc(second_count + 1);
 	strncpy(second_Num, Num, second_count);
 	second_Num[second_count] = '\0';
-	//printf("%s\n", Num);
 	Num += second_count;
-	//printf("%s\n", Num);
+
 	while (1)
 	{
 		int first_point = Find_Point(first_Num);
@@ -202,7 +196,6 @@ void Array_Sum(char* a)
 		temp = (char*)malloc(max_integer + max_point + 2);
 
 		temp[max_point] = '.';
-		printf("첫 번째 수 : %s\n두 번째 수 : %s\n첫 수의 부호 : %c 연산자 : %c\n", first_Num, second_Num, sign, oper);
 		if (oper == '+')
 		{
 			if (sign == '+')
@@ -488,7 +481,6 @@ void Array_Sum(char* a)
 			}
 		}
 		temp[max_integer + max_point_num + 1] = '\0';
-		printf("합 : %c%s\n", sign, temp);
 		free(first_Num);
 		free(second_Num);
 		total = Round(temp, max_point);
