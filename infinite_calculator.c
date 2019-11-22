@@ -34,7 +34,6 @@ char* Change_str(char* a)
 		}
 	}
 	char* temp = (char*)malloc(strlen(a)+cnt+1);
-	temp[strlen(a)+cnt] = '\0';
 	point = 0;
 	for (int i = 0, s = 0; i <= strlen(a); i++, s++)
 	{
@@ -55,6 +54,8 @@ char* Change_str(char* a)
 		}	
 		temp[s] = a[i];
 	}
+	
+	temp[strlen(a)+cnt+1] = '\0';
 	return temp;
 }
 
@@ -161,7 +162,6 @@ void Array_Sum(char* a)
 	char* total;
 	char sign; // 부호 변수
 	char* Num = Change_str(a);
-
 	if (Num[0] == '-')
 	{
 		sign = '-';
@@ -243,7 +243,11 @@ void Array_Sum(char* a)
 							else
 							{
                     			temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
-								temp[max_point + i]--;
+								if (temp[max_point + i] == '.')
+                                    temp[max_point + i -1]--;
+                                else
+                                    temp[max_point + i]--;
+
 							}
 						}
             		}
@@ -271,7 +275,11 @@ void Array_Sum(char* a)
                             else
                             {
                                 temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
-                                temp[max_point + i]--;
+                                if (temp[max_point + i] == '.')
+                                    temp[max_point + i -1]--;
+                                else
+                                    temp[max_point + i]--;
+
                             }
                         }
                     }
@@ -301,7 +309,11 @@ void Array_Sum(char* a)
                                 else
                                 {
                                     temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
-                                    temp[max_point + i]--;
+                                    if (temp[max_point + i] == '.')
+                                        temp[max_point + i -1]--;
+                                    else
+                                        temp[max_point + i]--;
+
                                 }
                             }
                         }
@@ -329,7 +341,11 @@ void Array_Sum(char* a)
                                 else
                                 {
                                     temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
-                                    temp[max_point + i]--;
+                                    if (temp[max_point + i] == '.')
+                                        temp[max_point + i -1]--;
+                                    else
+                                        temp[max_point + i]--;
+
                                 }
                             }
                         }
@@ -385,7 +401,10 @@ void Array_Sum(char* a)
                             else
                             {
                                 temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
-                                temp[max_point + i]--;
+                                if (temp[max_point + i] == '.')
+                                   	temp[max_point + i -1]--;
+                                else
+                                    temp[max_point + i]--;
                             }
                         }
                     }
@@ -413,7 +432,10 @@ void Array_Sum(char* a)
                             else
                             {
                                 temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
-                                temp[max_point + i]--;
+								if (temp[max_point + i] == '.')
+									temp[max_point + i -1]--;
+								else
+                                	temp[max_point + i]--;
                             }
                         }
                     }
@@ -443,7 +465,11 @@ void Array_Sum(char* a)
                             	else
                             	{
                                 	temp[max_point + i + 1] = 58 - (first_Num[first_point + i + 1]-48);
-                                	temp[max_point + i]--;
+									if (temp[max_point + i] == '.')
+                                    	temp[max_point + i -1]--;
+                                	else
+                                    	temp[max_point + i]--;
+
                             	}
                         	}
                     	}
@@ -471,7 +497,11 @@ void Array_Sum(char* a)
                             	else
                             	{
                                 	temp[max_point + i + 1] = 58 - (second_Num[second_point + i + 1]-48);
-                                	temp[max_point + i]--;
+                                	if (temp[max_point + i] == '.')
+                                        temp[max_point + i -1]--;
+                                    else
+                                        temp[max_point + i]--;
+
                             	}
                         	}
                     	}
@@ -492,7 +522,12 @@ void Array_Sum(char* a)
 		{
 			total = Clear(first_Num);
 			if (sign == '-')
-				printf("%c%s\n", sign, total);
+			{
+				if (*total != '0')
+					printf("%c%s\n", sign, total);
+				else
+					printf("%s\n", total);
+			}
 			else
 				printf("%s\n", total);
 			break;
