@@ -17,27 +17,47 @@ char *postfix(char *infix)
 	int count = 1;
 
 	//push(&top, 'C');
-	while (*infix != '\0') {
+	while (*infix != '\0') 
+	{
 			printf("infix[%d]:%c\n",count,*infix);
-		if (97 <= *infix && *infix <= 122) {
+		//if (97 <= *infix && *infix <= 122)
+		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
+		{
 			strncat(str, infix, 1);
-			strncat(str, space, 1);
+			//strncat(str, space, 1);
 		}
-		else {
-			if (*infix == '+' || *infix == '-') {
-				if (top(head) == '+' || top(head) == '-' || empty(head) || top(head) == '(') push(&head, *infix);
-				else if (top(head) == '*' || top(head) == '/') {
-					*temp = top(head);
-					pop(&head);
-					strncat(str,temp,1);
-					strncat(str,space,1);
+		else 
+		{
+			strncat(str, space, 1);
+			if (*infix == '+' || *infix == '-') 
+			{
+				if (top(head) == '+' || top(head) == '-' || empty(head) || top(head) == '(')
+					push(&head, *infix);
+				else if (top(head) == '*')
+				{
+					while (top(head) == '*')
+					{
+						//printf("%c\n", top(head));
+						pop(&head);
+						strncat(str, space, 1);
+						strncat(str,temp,1);
+						strncat(str,space,1);
+						//push(&head, *infix);
+					}
 					push(&head, *infix);
 				}
 			}
-			else if (*infix == '*' || *infix == '/') push(&head, *infix);
-			else if (*infix == '(') push(&head, *infix);
-			else if (*infix == ')') {
-				while (top(head) != '(') {
+			else if (*infix == '*')
+			{
+				push(&head, *infix);
+			}
+			/*
+			else if (*infix == '(') 
+				push(&head, *infix);
+			else if (*infix == ')')
+			{
+				while (top(head) != '(')
+				{
 					*temp = top(head);
 					pop(&head);
 					strncat(str,temp,1);
@@ -46,12 +66,15 @@ char *postfix(char *infix)
 				}
 				pop(&head);
 			}
+			*/
 		}
 		count++;
 		infix++;
 		display(head);
 	}
-	while (!empty(head)) {
+	strncat(str, space, 1);
+	while (!empty(head)) 
+	{
 		*temp = top(head);
 		pop(&head);
 		strncat(str,temp,1);
@@ -62,9 +85,12 @@ char *postfix(char *infix)
 	return str;
 }
 
-int main(void) {
+int main(int argc, char* argv[]) 
+{
 	char* result;
-	printf("%s\n", result = postfix("a*b+(c-d*e)"));
-	free(result);
+	result = postfix(argv[1]);
+	printf("%s\n", postfix(argv[1]));
+	//free(result);
+	//Array_Sum(result);
 	return 0;
 }
