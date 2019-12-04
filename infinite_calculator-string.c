@@ -165,13 +165,13 @@ void Array_Sum(char* Num)
 	char* first_Num;
 	//char* Num = Change_str(a);
 	string_node* head = NULL;
+	/*
 	if (Num[0] == '-')
 	{
 		sign = '-';
 		Num++;
 	}
-	else
-		sign = '+';
+	*/
 	int first_count = Operator_Count(Num);
 	first_Num = (char*)malloc(first_count+1);
     strncpy(first_Num, Num, first_count);
@@ -187,16 +187,24 @@ void Array_Sum(char* Num)
 		*/
 		if (first_Num[0] == '+' || first_Num[0] == '-' || first_Num[0] == '*')
 		{
+			if (first_Num[1] != '\0')
+				push(&head, first_Num);
 			//printf("%s\n", head->data);
-			total = calc((head->next)->data, head->data, first_Num[0]);
-			pop(&head);
-			pop(&head);
-			push(&head, total);
+			else
+			{
+				total = calc((head->next)->data, head->data, first_Num[0]);
+				pop(&head);
+				pop(&head);
+				printf("%s\n", total);
+				push(&head, total);
+			}
 		}
 		else
+		{
 			push(&head, first_Num);
+		}
 
-		if (*Num == '\0')
+		if (Num[1] == '\0')
 			break;
 		else
 			Num++;
@@ -585,10 +593,10 @@ void Array_Sum(char* Num)
 	*/
 }
 
-
+/*
 int main(int argc, char* argv[])
 {
 	Array_Sum(argv[1]);
 	return 0;
 }
-
+*/
