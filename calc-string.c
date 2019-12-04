@@ -5,17 +5,32 @@
 char* calc(char * first_Num, char* second_Num,  char oper)
 {
 	char* total;
-	char sign = '+';
+	char first_sign = '+';
+	char second_sign = '+';
 	if (first_Num[0] == '-')
 	{
-		sign = '-';
+		first_sign = '-';
 		first_Num++;
 	}
-
-	if (oper == '+')
+	if (second_Num[0] == '-')
 	{
-		if (sign == '+')
-			total = add(first_Num, second_Num, sign);
+		second_sign = '-';
+		second_Num++;
+	}
+
+	if (first_sign == '+')
+	{
+		if (oper == second_sign)
+			total = add(first_Num, second_Num, first_sign);
+		else
+			total = minus(first_Num, second_Num, first_sign);
+	}
+	else if (first_sign == '-')
+	{
+		if (oper == second_sign)
+			total = minus(first_Num, second_Num, first_sign);
+		else
+			total = add(first_Num, second_Num, first_sign);
 	}
 	/*
 		else
@@ -34,7 +49,7 @@ char* calc(char * first_Num, char* second_Num,  char oper)
 	return total;
 }
 
-char* add(char* first_Num, char* second_Num, char sign)
+char* add(char* first_Num, char* second_Num, char first_sign)
 {
 	char* total;
 	char* temp;
@@ -69,14 +84,25 @@ char* add(char* first_Num, char* second_Num, char sign)
 			temp[max_point + i + 1] = second_Num[second_point + i + 1];
 	}
 	temp[max_integer + max_point_num + 1] = '\0';
-	total = Round(temp, max_point);
+	if (first_sign == '-')
+	{
+		total = Round(temp, max_point);
+		char* temp2 = (char*)malloc(strlen(total)+2);
+		temp2[0] = '-';
+		strcat(temp2, total);
+		free(temp);
+		total = temp2;
+		//total = Round(temp2, max_point+1);
+	}
+	else
+		total = Round(temp, max_point);
 
 	return total;
 }
 
-char* minus(char* first_Num, char* second_Num, char sign)
+char* minus(char* first_Num, char* second_Num, char first_sign)
 {
-
+	
 }
 
 char* multiply(char* first_Num, char* second_Num, char sign)
