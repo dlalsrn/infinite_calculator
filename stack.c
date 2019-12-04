@@ -7,7 +7,7 @@ struct node {
 	struct node* next; 
 }; 
 
-struct node* new_node(int data) 
+struct node* new_node_(int data) 
 { 
 	struct node* temp_node = (struct node*)malloc(sizeof(struct node)); 
 	temp_node->data = data; 
@@ -15,7 +15,7 @@ struct node* new_node(int data)
 	return temp_node; 
 } 
 
-int empty(struct node* head) 
+int empty_(struct node* head) 
 { 
 	if(!head){ 
 		printf("stack is empty\n");
@@ -24,17 +24,17 @@ int empty(struct node* head)
 	return 0; 
 } 
 
-void push(struct node** head, int data) 
+void push_(struct node** head, int data) 
 { 
-	struct node* temp_node = new_node(data); 
+	struct node* temp_node = new_node_(data); 
 	temp_node->next = *head; 
 	*head = temp_node; 
 	printf("PUSH: [%c]\n", data);
 } 
 
-int pop(struct node** head) 
+int pop_(struct node** head) 
 { 
-	if (empty(*head)){
+	if (empty_(*head)){
 		return INT_MIN;
 	}
 	struct node* temp = *head; 
@@ -46,16 +46,16 @@ int pop(struct node** head)
 	return element; 
 } 
 
-int top(struct node* head) 
+int top_(struct node* head) 
 { 
-	if(empty(head)) 
+	if(empty_(head)) 
 		return INT_MIN; 
 	return head->data; 
 }
 
-void display(struct node* head){
+void display_(struct node* head){
 
-	if(empty(head)){
+	if(empty_(head)){
 		return;
 	}
 	struct node* cursor = NULL;
