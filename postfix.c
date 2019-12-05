@@ -14,7 +14,7 @@ char *postfix(char *infix)
 	//char space = ' ';
 	char* space = " ";
 	int count = 1;
-
+	int point = 0;
 	//push(&top, 'C');
 	while (*infix != '\0') 
 	{
@@ -22,15 +22,26 @@ char *postfix(char *infix)
 		//if (97 <= *infix && *infix <= 122)
 		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
 		{
+			if (*infix == '.')
+				point = 1;
 			strncat(str, infix, 1);
 			//strncat(str, space, 1);
 		}
 		else 
 		{
-			strncat(str, space, 1);
+			if (point == 0)
+			{
+				strcat(str, ".");
+			}
+			else
+				point = 0;
+			if (count != 1)
+				strncat(str, space, 1);
 			if (*infix == '+' || *infix == '-') 
 			{
-				if (empty_(head))
+				if (count == 1)
+					strncat(str, infix, 1);
+				else if (empty_(head))
 					push_(&head, *infix);
 				else if (top_(head) == '-')
 				{
@@ -81,6 +92,8 @@ char *postfix(char *infix)
 		infix++;
 		display_(head);
 	}
+	if (point == 0)
+		strcat(str, ".");
 	strncat(str, space, 1);
 	while (!empty_(head)) 
 	{
