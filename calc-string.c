@@ -93,11 +93,11 @@ char* add(char* first_Num, char* second_Num, char first_sign)
 		temp2[0] = '-';
 		strcat(temp2, total);
 		free(temp);
-		total = temp2;
-		//total = Round(temp2, max_point+1);
+		//total = temp2;
+		total = Clear(temp2);
 	}
 	else
-		total = Round(temp, max_point);
+		total = Clear(Round(temp, max_point));
 
 	return total;
 }
@@ -258,11 +258,12 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
         temp2[0] = '-';
         strcat(temp2, total);
         free(temp);
-        total = temp2;
+		//total = temp2;
+        total = Clear(temp2);
         //total = Round(temp2, max_point+1);
     }
     else
-        total = Round(temp, max_point);
+        total = Clear(Round(temp, max_point));
 
     return total;
 }

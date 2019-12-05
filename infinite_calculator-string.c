@@ -151,8 +151,10 @@ char* Clear(char* a)
 	int i;
 	for (i = strlen(temp) - 1; temp[i] == '0'; i--)
 		temp[i] = '\0';
+	/*
 	if (temp[i] == '.')
 		temp[i] = '\0';
+	*/
 	return temp;
 }
 
