@@ -19,7 +19,7 @@ char* top(string_node* head);
 void display(string_node* head);
 char* add(char*, char*, char);
 char* minus(char*, char*, char);
-char* multiply(char*, char*, char);
+char* multiply(char*, char*, char, char);
 char* calc(char*, char*, char);
 int Operator_Count(char* ary);
 int Find_Point(char* ary);

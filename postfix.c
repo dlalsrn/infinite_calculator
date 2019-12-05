@@ -29,7 +29,7 @@ char *postfix(char *infix)
 		}
 		else 
 		{
-			if (point == 0)
+			if (point == 0 && count != 1)
 			{
 				strcat(str, ".");
 			}

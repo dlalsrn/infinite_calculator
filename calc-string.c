@@ -292,6 +292,7 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 	for(int i = 0; i < first_integer+second_integer+(first_count-first_point-1)+(second_count-second_point-1)+1; i++)
 		temp[i] = '0';
 	temp[first_integer+second_integer] = '.';
+	printf("%s\n", temp);
 	int num;
 	int cnt = 0;
 	int main_cnt = 0;
@@ -302,15 +303,17 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 			cnt++;
 			continue;
 		}
-		for (int s = strlen(second_Num)-1; s > -1; s--)
+		for (int s = strlen(second_Num)-1; s > second_point; s--)
 		{	
+			/*
 			if (second_Num[s] == '.')
 			{
 				cnt++;
 				continue;
 			}
+			*/
 			num = (first_Num[i]-48) * (second_Num[s]-48);
-			printf("%d\n", num);
+			printf("i : %d, s : %d, num : %d, index : %d\n", i, s, num, i+s+cnt-main_cnt);
 			if (temp[i+s+cnt-main_cnt] == '.')
 				main_cnt++;
 			temp[i+s+cnt-main_cnt] += num%10;
@@ -320,11 +323,53 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 				temp[i+s+cnt-main_cnt-1] += num/10;
 		}
 		printf("%s\n", temp);
-		cnt = 0;
-		main_cnt = 0;
+		//cnt = 0;
+		//main_cnt = 0;
 	}
+	printf("정수 부분\n");
+	main_cnt = 0;
+	cnt = 1;
+	int gap = (first_integer > second_integer) ? first_integer-second_integer : second_integer-first_integer;
+	for (int i = strlen(first_Num)-1; i > -1; i--)
+    {
+        if (first_Num[i] == '.')
+        {
+            cnt++;
+            continue;
+        }
+        for (int s = second_point-1; s > -1; s--)
+        {
+            /*
+            if (second_Num[s] == '.')
+            {
+                cnt++;
+                continue;
+            }
+            */
+            num = (first_Num[i]-48) * (second_Num[s]-48);
+            if (temp[i+s+cnt-main_cnt] == '.' && main_cnt == 0)
+                main_cnt++;
+
+            printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
+			if (temp[i+s+cnt-main_cnt] == '.')
+				temp[i+s+cnt-main_cnt-1] += num%10;
+			else
+            	temp[i+s+cnt-main_cnt] += num%10;
+            if (temp[i+s+cnt-main_cnt-1] == '.')
+                temp[i+s+cnt-main_cnt-2] += num/10;
+            else
+                temp[i+s+cnt-main_cnt-1] += num/10;
+        }
+		if (i > first_point)
+			main_cnt = 0;
+		printf("%s\n", temp);
+        //cnt = 0;
+        //main_cnt = 0;
+    }
 
 	printf("%s\n", temp);
+	
+	// 미완
 	if (first_sign != second_sign)
     {
         total = Round(temp, first_integer+second_integer);
@@ -332,11 +377,11 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
         temp2[0] = '-';
         strcat(temp2, total);
         free(temp);
-        total = temp2;
+        total = Clear(temp2);
         //total = Round(temp2, max_point+1);
     }
     else
-        total = Round(temp, max_point);
+        total = Clear(Round(temp, first_integer+second_integer));
 
     return total;
 }
