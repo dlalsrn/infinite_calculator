@@ -150,7 +150,11 @@ char* Clear(char* a)
 	strcpy(temp, a);
 	int i;
 	for (i = strlen(temp) - 1; temp[i] == '0'; i--)
+	{
+		if (temp[i-1] == '.')
+			break;
 		temp[i] = '\0';
+	}
 	/*
 	if (temp[i] == '.')
 		temp[i] = '\0';
@@ -218,8 +222,23 @@ void Array_Sum(char* Num)
 		first_Num[first_count] = '\0';
 		//free(first_Num);
 	}
-
-	display(head);
+	
+	total = pop(&head);
+	if (total[0] == '-' && total[1] == '0' && total[strlen(total)-1] == '.')
+	{
+		total++;
+		printf("%s0\n", total);
+	}
+	else if (total[strlen(total)-1] == '.')
+		printf("%s0\n", total);
+	else if (total[0] == '-' && total[1] == '0')
+	{
+		total++;
+		printf("%s\n", total);
+	}
+	else
+		printf("%s\n", total);
+	//display(head);
 	/*
 	Num += first_count;
 	oper = *Num;

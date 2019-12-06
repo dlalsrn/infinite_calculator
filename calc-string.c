@@ -322,6 +322,9 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 			else
 				temp[i+s+cnt-main_cnt-1] += num/10;
 		}
+		if (i > first_point)
+            main_cnt = 0;
+
 		printf("%s\n", temp);
 		//cnt = 0;
 		//main_cnt = 0;
