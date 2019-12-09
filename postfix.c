@@ -9,7 +9,7 @@ char *postfix(char *infix)
 	str = (char *) malloc(2*sizeof(char)*strlen(infix)+1);
 	memset(str, 0, 2*sizeof(char)*strlen(infix)+1);
 	struct node* head = NULL; //stack <char> operator;
-	char* temp;
+	char* temp = "";
 	temp = (char *) malloc(sizeof(char));
 	//char space = ' ';
 	char* space = " ";
@@ -18,6 +18,7 @@ char *postfix(char *infix)
 	//push(&top, 'C');
 	while (*infix != '\0') 
 	{
+		printf("%s\n", str);
 			printf("infix[%d]:%c\n",count,*infix);
 		//if (97 <= *infix && *infix <= 122)
 		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
@@ -29,20 +30,23 @@ char *postfix(char *infix)
 		}
 		else 
 		{
-			if (point == 0 && count != 1)
+			if (point == 0 && count != 1 && *infix != '(' && *temp != '(')
 			{
 				strcat(str, ".");
 			}
 			else
 				point = 0;
-			if (count != 1)
+			if (count != 1 && *infix != '(' && *temp != '(')
 				strncat(str, space, 1);
 			if (*infix == '+' || *infix == '-') 
 			{
 				if (count == 1)
 					strncat(str, infix, 1);
-				else if (empty_(head))
+				else if (empty_(head) || top_(head) == '(')
+				{
+					*temp = *infix;
 					push_(&head, *infix);
+				}
 				else if (top_(head) == '-')
 				{
 					*temp = pop_(&head);
@@ -52,7 +56,10 @@ char *postfix(char *infix)
 					push_(&head, *infix);
 				}
 				else if (top_(head) == '+')
+				{
+					*temp = *infix;
 					push_(&head, *infix);
+				}
 				else if (top_(head) == '*')
 				{
 					while (top_(head) == '*' || top_(head) == '-')
@@ -69,7 +76,25 @@ char *postfix(char *infix)
 			}
 			else if (*infix == '*')
 			{
+				*temp = *infix;
 				push_(&head, *infix);
+			}
+			else // 미완
+			{
+				if (*infix == '(')
+					push_(&head, *infix);
+				else
+				{
+					while (top_(head) != '(')
+					{
+						*temp = pop_(&head);
+						strncat(str, temp, 1);
+						strncat(str, space, 1);
+						//pop_(&head);
+					}
+					*temp = pop_(&head);
+					printf("%c\n", *temp);
+				}
 			}
 			/*
 			else if (*infix == '(') 
@@ -92,9 +117,10 @@ char *postfix(char *infix)
 		infix++;
 		display_(head);
 	}
-	if (point == 0)
+	if (point == 0 && *temp != '(')
 		strcat(str, ".");
-	strncat(str, space, 1);
+	if (*temp != '(')
+		strncat(str, space, 1);
 	while (!empty_(head)) 
 	{
 		*temp = top_(head);
