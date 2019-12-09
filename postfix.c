@@ -137,8 +137,9 @@ int main(int argc, char* argv[])
 {
 	char* result;
 	result = postfix(argv[1]);
-	printf("%s\n", result);
-	//free(result);
 	Array_Sum(result);
+	//scanf(" %s", result);
+	//char* total = postfix(result);
+	//Array_Sum(total);
 	return 0;
 }
