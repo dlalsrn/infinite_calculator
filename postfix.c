@@ -115,6 +115,12 @@ char *postfix(char *infix)
 			}
 			*/
 		}
+		if (*infix == ')' && infix[1] == '(')
+		{
+			push_(&head, '*');
+			*temp = '*';
+		}
+
 		if (*infix == '(' && infix[1] == '-')
 		{
 			strcat(str, "-");
