@@ -115,7 +115,19 @@ char *postfix(char *infix)
 			}
 			*/
 		}
-		if (*infix == ')' && infix[1] == '(')
+		
+		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
+		{
+			strcat(str, ". ");
+			push_(&head, '*');
+			*temp = '*';
+		}
+		else if (*infix == ')' && (infix[1] >= 48 && infix[1] < 58))
+		{
+			push_(&head, '*');
+			*temp = '*';
+		}
+		else if (*infix == ')' && infix[1] == '(')
 		{
 			push_(&head, '*');
 			*temp = '*';
