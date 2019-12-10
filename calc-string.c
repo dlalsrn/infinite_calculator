@@ -2,6 +2,39 @@
 #include <stdlib.h>
 #include <string.h>
 #include "str.h"
+
+char* temp_Round(char* ary, int max_point)
+{
+    char* temp = (char*)malloc(strlen(ary) + 1); 
+    strcpy(temp, ary);
+    for (int i = strlen(temp) - 1; i > 0; i--)
+    {   
+        if (temp[i] == '.' && i == max_point)
+            continue;
+
+        if(temp[i] >= 58) 
+        {
+            if (temp[i - 1] == '.' && i - 1 == max_point)
+            {
+                while (temp[i] >= 58) 
+                {
+                    temp[i] -= 10; 
+                    temp[i - 2]++;
+                }
+            }
+            else
+            {
+                while (temp[i] >= 58) 
+                {
+                    temp[i] -= 10; 
+                    temp[i - 1]++;
+                }
+            }
+        }
+	}
+	return temp;
+}
+
 char* calc(char * first_Num, char* second_Num,  char oper)
 {
 	char* total;
@@ -305,15 +338,7 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 		}
 		for (int s = strlen(second_Num)-1; s > second_point; s--)
 		{	
-			/*
-			if (second_Num[s] == '.')
-			{
-				cnt++;
-				continue;
-			}
-			*/
 			num = (first_Num[i]-48) * (second_Num[s]-48);
-			//printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
 			if (temp[i+s+cnt-main_cnt] == '.')
 				main_cnt++;
 			printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
@@ -323,9 +348,10 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 			else
 				temp[i+s+cnt-main_cnt-1] += num/10;
 		}
-		if (i+(strlen(second_Num)-1) > first_point)
-            main_cnt = 0;
 
+		if (i+(strlen(second_Num)-1) > first_point+second_point)
+            main_cnt = 0;
+		temp = temp_Round(temp, first_point+second_point);
 		printf("%s\n", temp);
 		//cnt = 0;
 		//main_cnt = 0;
@@ -343,13 +369,6 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
         }
         for (int s = second_point-1; s > -1; s--)
         {
-            /*
-            if (second_Num[s] == '.')
-            {
-                cnt++;
-                continue;
-            }
-            */
             num = (first_Num[i]-48) * (second_Num[s]-48);
             if (temp[i+s+cnt-main_cnt] == '.' && main_cnt == 0)
                 main_cnt++;
@@ -366,6 +385,7 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
         }
 		if (i > first_point)
 			main_cnt = 0;
+		temp = temp_Round(temp, first_point+second_point);
 		printf("%s\n", temp);
         //cnt = 0;
         //main_cnt = 0;
