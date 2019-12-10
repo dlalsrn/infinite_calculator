@@ -349,7 +349,7 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 				temp[i+s+cnt-main_cnt-1] += num/10;
 		}
 
-		if (i+(strlen(second_Num)-1) > first_point+second_point)
+		if (i+(strlen(second_Num)-1)+cnt > first_point+second_point)
             main_cnt = 0;
 		temp = temp_Round(temp, first_point+second_point);
 		printf("%s\n", temp);
