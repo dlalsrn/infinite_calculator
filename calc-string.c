@@ -313,16 +313,17 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 			}
 			*/
 			num = (first_Num[i]-48) * (second_Num[s]-48);
-			printf("i : %d, s : %d, num : %d, index : %d\n", i, s, num, i+s+cnt-main_cnt);
+			//printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
 			if (temp[i+s+cnt-main_cnt] == '.')
 				main_cnt++;
+			printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
 			temp[i+s+cnt-main_cnt] += num%10;
 			if (temp[i+s+cnt-main_cnt-1] == '.')
 				temp[i+s+cnt-main_cnt-2] += num/10;
 			else
 				temp[i+s+cnt-main_cnt-1] += num/10;
 		}
-		if (i > first_point)
+		if (i+(strlen(second_Num)-1) > first_point)
             main_cnt = 0;
 
 		printf("%s\n", temp);
