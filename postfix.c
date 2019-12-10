@@ -82,7 +82,9 @@ char *postfix(char *infix)
 			else // 미완
 			{
 				if (*infix == '(')
+				{
 					push_(&head, *infix);
+				}
 				else
 				{
 					while (top_(head) != '(')
@@ -113,6 +115,12 @@ char *postfix(char *infix)
 			}
 			*/
 		}
+		if (*infix == '(' && infix[1] == '-')
+		{
+			strcat(str, "-");
+			infix++;
+		}
+
 		count++;
 		infix++;
 		display_(head);
