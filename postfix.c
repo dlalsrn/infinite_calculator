@@ -79,13 +79,13 @@ char *postfix(char *infix)
 				*temp = *infix;
 				push_(&head, *infix);
 			}
-			else // 미완
+			else
 			{
 				if (*infix == '(')
 				{
 					push_(&head, *infix);
 				}
-				else
+				else // ')' 일 때
 				{
 					while (top_(head) != '(')
 					{
@@ -116,9 +116,15 @@ char *postfix(char *infix)
 			*/
 		}
 		
-		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
+		if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point == 0)
 		{
 			strcat(str, ". ");
+			push_(&head, '*');
+			*temp = '*';
+		}
+		else if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point != 0)
+		{
+			strcat(str, " ");
 			push_(&head, '*');
 			*temp = '*';
 		}
