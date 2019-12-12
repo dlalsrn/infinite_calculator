@@ -140,7 +140,7 @@ char* add(char* first_Num, char* second_Num, char first_sign)
 	int max_integer = (first_count - (first_count - first_point)) > (second_count - (second_count - second_point)) ? first_count - (first_count - first_point) : second_count - (second_count - second_point);
 	int max_point = first_point > second_point ? first_point : second_point;
 	int max_point_num = first_count - first_point - 1 > second_count - second_point - 1 ? first_count - first_point - 1 : second_count - second_point - 1;
-	temp = (char*)malloc(max_integer + max_point + 2);
+	temp = (char*)malloc(max_integer + max_point_num + 2);
 	temp[max_point] = '.';
 	
 	for (int i = 1; max_point - i > -1; i++)
@@ -191,7 +191,7 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
     int max_integer = (first_count - (first_count - first_point)) > (second_count - (second_count - second_point)) ? first_count - (first_count - first_point) : second_count - (second_count - second_point);
     int max_point = first_point > second_point ? first_point : second_point;
     int max_point_num = first_count - first_point - 1 > second_count - second_point - 1 ? first_count - first_point - 1 : second_count - second_point - 1;
-    temp = (char*)malloc(max_integer + max_point + 2);
+    temp = (char*)malloc(max_integer + max_point_num + 2);
     temp[max_point] = '.';
 
 	if (second_integer > first_integer)
