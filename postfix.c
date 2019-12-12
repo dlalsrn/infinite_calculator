@@ -22,20 +22,24 @@ char *postfix(char *infix)
 			printf("infix[%d]:%c\n",count,*infix);
 		//if (97 <= *infix && *infix <= 122)
 		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
-		{
+		{	
+			/*
 			if (*infix == '.')
 				point = 1;
+			*/
 			strncat(str, infix, 1);
 			//strncat(str, space, 1);
 		}
 		else 
 		{
+			/*
 			if (point == 0 && count != 1 && *infix != '(' && *temp != '(')
 			{
 				strcat(str, ".");
 			}
 			else
 				point = 0;
+			*/
 			if (count != 1 && *infix != '(' && *temp != '(')
 				strncat(str, space, 1);
 			if (*infix == '+' || *infix == '-') 
@@ -115,7 +119,7 @@ char *postfix(char *infix)
 			}
 			*/
 		}
-		
+		/*
 		if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point == 0)
 		{
 			strcat(str, ". ");
@@ -123,6 +127,13 @@ char *postfix(char *infix)
 			*temp = '*';
 		}
 		else if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point != 0)
+		{
+			strcat(str, " ");
+			push_(&head, '*');
+			*temp = '*';
+		}
+		*/
+		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
 		{
 			strcat(str, " ");
 			push_(&head, '*');
@@ -149,8 +160,10 @@ char *postfix(char *infix)
 		infix++;
 		display_(head);
 	}
+	/*
 	if (point == 0 && *temp != '(')
 		strcat(str, ".");
+	*/
 	if (*temp != '(')
 		strncat(str, space, 1);
 	while (!empty_(head)) 
