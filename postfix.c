@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "str.h"
+#define MAX 8000000
 char *postfix(char *infix)
 {
 	char *str;
@@ -115,6 +116,7 @@ char *postfix(char *infix)
 			}
 			*/
 		}
+		/*
 		if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point == 0)
 		{
 			strcat(str, ". ");
@@ -127,7 +129,8 @@ char *postfix(char *infix)
 			push_(&head, '*');
 			*temp = '*';
 		}
-		else if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
+		*/
+		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
 		{
 			strcat(str, " ");
 			push_(&head, '*');
@@ -174,9 +177,9 @@ char *postfix(char *infix)
 
 int main(int argc, char* argv[]) 
 {
-	long long MAX = 9223372036854775807;
+	FILE * temp = fopen(argv[1], "r");
 	FILE * OP = fopen(argv[1], "r");
-	char result[1000];
+	char result[MAX];
 	char* total;
 	fscanf(OP, "%s", result);
 	fclose(OP);

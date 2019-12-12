@@ -108,7 +108,7 @@ char* Round(char* ary, int max_point)
 			}
 		}
 	}
-
+	printf("%s\n", temp);
 	if (temp[0] >= 58)
 	{
 		char* temp2 = (char*)malloc(strlen(temp) + 2);
@@ -146,6 +146,7 @@ char* Round(char* ary, int max_point)
 
 char* Clear(char* a)
 {
+	printf("%s\n", a);
 	char* temp = (char*)malloc(strlen(a)+1);
 	strcpy(temp, a);
 	int i;
@@ -225,26 +226,37 @@ void Array_Sum(char* Num)
 	}
 	
 	total = pop(&head);
-	if (!empty(head))
-	{
-		printf("error\n");
-		exit(1);
-	}
 	if (total[0] == '-' && total[1] == '0' && total[strlen(total)-1] == '.')
 	{
 		total++;
+		temp = (char*)malloc(strlen(total)+2);
+		strcpy(temp, total);
+		strcat(temp, "0");
 		printf("%s0\n", total);
+		
 	}
 	else if (total[strlen(total)-1] == '.')
+	{
+		temp = (char*)malloc(strlen(total)+2);
+		strcpy(temp, total);
+		strcat(temp, "0");
 		printf("%s0\n", total);
+	}
 	else if (total[0] == '-' && total[1] == '0' && total[2] == '.' && total[3] == '0')
 	{
 		total++;
+		temp = (char*)malloc(strlen(total)+2);
+		strcpy(temp, total);
 		printf("%s\n", total);
 	}
 	else
+	{
+		temp = (char*)malloc(strlen(total)+2);
+		strcpy(temp, total);
 		printf("%s\n", total);
-	fprintf(CP, "%s", total);
+	}
+	fprintf(CP, "%s", temp);
+	fprintf(CP, "%s", "\n"); 
 	fclose(CP);
 	//fclose(CP);
 	//display(head);

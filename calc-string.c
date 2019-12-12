@@ -59,10 +59,12 @@ char* calc(char * first_Num, char* second_Num,  char oper)
 	int second_point = 0;
 	first_point = find_point(first_Num);
 	second_point = find_point(second_Num);
+	printf("%ld %ld\n", strlen(first_Num), strlen(second_Num));
+	printf("%s\n%s\n", first_Num, second_Num);
 	if (first_point != 1)
 	{
 		temp = (char*)malloc(strlen(first_Num)+2);
-		strcat(temp, first_Num);
+		strcpy(temp, first_Num);
 		strcat(temp, ".\0");
 		free(first_Num);
 		first_Num = (char*)malloc(strlen(temp)+1);
@@ -72,7 +74,7 @@ char* calc(char * first_Num, char* second_Num,  char oper)
 	if (second_point != 1)
 	{
 		temp = (char*)malloc(strlen(second_Num)+2);
-        strcat(temp, second_Num);
+        strcpy(temp, second_Num);
         strcat(temp, ".\0");
 		free(second_Num);
 		second_Num = (char*)malloc(strlen(temp)+1);
@@ -80,6 +82,7 @@ char* calc(char * first_Num, char* second_Num,  char oper)
  		free(temp);
 	}
 	printf("%s\n%s\n", first_Num, second_Num);
+	printf("%ld %ld\n", strlen(first_Num), strlen(second_Num));
 	if (first_Num[0] == '-')
 	{
 		first_sign = '-';
@@ -324,6 +327,7 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
 		}
 	}
 	temp[max_integer + max_point_num + 1] = '\0';
+	printf("%s\n", temp);
     if (first_sign == '-')
     {
         total = Round(temp, max_point);
@@ -337,7 +341,6 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
     }
     else
         total = Clear(Round(temp, max_point));
-
     return total;
 }
 
