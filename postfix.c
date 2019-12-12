@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "str.h"
-
 char *postfix(char *infix)
 {
 	char *str;
@@ -22,24 +21,21 @@ char *postfix(char *infix)
 			printf("infix[%d]:%c\n",count,*infix);
 		//if (97 <= *infix && *infix <= 122)
 		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
-		{	
-			/*
+		{	/*
 			if (*infix == '.')
 				point = 1;
-			*/
+				*/
 			strncat(str, infix, 1);
 			//strncat(str, space, 1);
 		}
 		else 
-		{
-			/*
+		{/*
 			if (point == 0 && count != 1 && *infix != '(' && *temp != '(')
 			{
 				strcat(str, ".");
 			}
 			else
-				point = 0;
-			*/
+				point = 0;*/
 			if (count != 1 && *infix != '(' && *temp != '(')
 				strncat(str, space, 1);
 			if (*infix == '+' || *infix == '-') 
@@ -119,7 +115,6 @@ char *postfix(char *infix)
 			}
 			*/
 		}
-		/*
 		if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point == 0)
 		{
 			strcat(str, ". ");
@@ -132,8 +127,7 @@ char *postfix(char *infix)
 			push_(&head, '*');
 			*temp = '*';
 		}
-		*/
-		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
+		else if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
 		{
 			strcat(str, " ");
 			push_(&head, '*');
@@ -180,11 +174,16 @@ char *postfix(char *infix)
 
 int main(int argc, char* argv[]) 
 {
-	char* result;
-	result = postfix(argv[1]);
-	Array_Sum(result);
+	long long MAX = 9223372036854775807;
+	FILE * OP = fopen(argv[1], "r");
+	char result[1000];
+	char* total;
+	fscanf(OP, "%s", result);
+	fclose(OP);
+	printf("%s\n", result);
+	total = postfix(result);
+	Array_Sum(total);
 	//scanf(" %s", result);
 	//char* total = postfix(result);
 	//Array_Sum(total);
-	return 0;
 }

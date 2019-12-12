@@ -164,6 +164,7 @@ char* Clear(char* a)
 
 void Array_Sum(char* Num)
 {
+	FILE* CP = fopen("result", "w");
 	char* temp;
 	char oper; // 연산자 저장 변수
 	char* total;
@@ -224,6 +225,11 @@ void Array_Sum(char* Num)
 	}
 	
 	total = pop(&head);
+	if (!empty(head))
+	{
+		printf("error\n");
+		exit(1);
+	}
 	if (total[0] == '-' && total[1] == '0' && total[strlen(total)-1] == '.')
 	{
 		total++;
@@ -231,13 +237,16 @@ void Array_Sum(char* Num)
 	}
 	else if (total[strlen(total)-1] == '.')
 		printf("%s0\n", total);
-	else if (total[0] == '-' && total[1] == '0')
+	else if (total[0] == '-' && total[1] == '0' && total[2] == '.' && total[3] == '0')
 	{
 		total++;
 		printf("%s\n", total);
 	}
 	else
 		printf("%s\n", total);
+	fprintf(CP, "%s", total);
+	fclose(CP);
+	//fclose(CP);
 	//display(head);
 	/*
 	Num += first_count;

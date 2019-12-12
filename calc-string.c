@@ -35,11 +35,51 @@ char* temp_Round(char* ary, int max_point)
 	return temp;
 }
 
+int find_point(char* Num)
+{
+	int point = 0;
+	for(int i = 0; i < strlen(Num); i++)
+	{
+		if (Num[i] == '.')
+		{
+			point = 1;
+			break;
+		}
+	}
+	return point;
+}
+
 char* calc(char * first_Num, char* second_Num,  char oper)
 {
 	char* total;
+	char* temp;
 	char first_sign = '+';
 	char second_sign = '+';
+	int first_point = 0;
+	int second_point = 0;
+	first_point = find_point(first_Num);
+	second_point = find_point(second_Num);
+	if (first_point != 1)
+	{
+		temp = (char*)malloc(strlen(first_Num)+2);
+		strcat(temp, first_Num);
+		strcat(temp, ".\0");
+		free(first_Num);
+		first_Num = (char*)malloc(strlen(temp)+1);
+		strcpy(first_Num, temp);
+		free(temp);
+	}
+	if (second_point != 1)
+	{
+		temp = (char*)malloc(strlen(second_Num)+2);
+        strcat(temp, second_Num);
+        strcat(temp, ".\0");
+		free(second_Num);
+		second_Num = (char*)malloc(strlen(temp)+1);
+        strcpy(second_Num, temp);
+ 		free(temp);
+	}
+	printf("%s\n%s\n", first_Num, second_Num);
 	if (first_Num[0] == '-')
 	{
 		first_sign = '-';
