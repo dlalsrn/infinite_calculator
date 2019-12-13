@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "str.h"
 #define MAX 8000000
 
@@ -237,8 +238,31 @@ char *postfix(char *infix)
 	return str;
 }
 
+long long getElapsedTime(unsigned int nFlag)
+{
+	const long long NANOS = 1000000000LL;
+	static struct timespec startTS, endTS;
+	static long long retDiff = 0;
+
+	if (nFlag == 0) {
+		retDiff = 0;
+		if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &startTS) == -1) {
+			printf("Failed to call clock_gettime\n");
+		}
+	}
+	else {
+		if (clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &endTS) == -1) {
+			printf("Failed to call clock_gettime\n");
+		}
+		retDiff = NANOS * (endTS.tv_sec - startTS.tv_sec) + (endTS.tv_nsec - startTS.tv_nsec);
+ 	}
+
+	return retDiff;
+}
+
 int main(int argc, char* argv[]) 
 {
+	getElapsedTime(0);
 	FILE * OP = fopen(argv[1], "r");
 	char result[MAX];
 	char* total;
@@ -249,4 +273,5 @@ int main(int argc, char* argv[])
 	exception(result);
 	total = postfix(result);
 	Array_Sum(total);
+	printf("Elapsed Time: %lld\n", getElapsedTime(1));
 }
