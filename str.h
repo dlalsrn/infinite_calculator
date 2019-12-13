@@ -7,7 +7,8 @@ typedef struct Node {
     char* data;     
 	struct Node* next;
 }string_node;
-
+void space_exception();
+void exception(char *);
 char *postfix(char *infix);
 struct Node;
 typedef struct Node string_node;
