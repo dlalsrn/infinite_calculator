@@ -130,32 +130,17 @@ char *postfix(char *infix)
 	struct node* head = NULL; //stack <char> operator;
 	char* temp = "";
 	temp = (char *) malloc(sizeof(char));
-	//char space = ' ';
 	char* space = " ";
 	int count = 1;
 	int point = 0;
-	//push(&top, 'C');
 	while (*infix != '\0') 
 	{
-		printf("%s\n", str);
-			printf("infix[%d]:%c\n",count,*infix);
-		//if (97 <= *infix && *infix <= 122)
 		if (*infix != '+' && *infix != '-' && *infix != '*' && *infix != '(' && *infix != ')')
-		{	/*
-			if (*infix == '.')
-				point = 1;
-				*/
+		{
 			strncat(str, infix, 1);
-			//strncat(str, space, 1);
 		}
 		else 
-		{/*
-			if (point == 0 && count != 1 && *infix != '(' && *temp != '(')
-			{
-				strcat(str, ".");
-			}
-			else
-				point = 0;*/
+		{
 			if (count != 1 && *infix != '(' && *temp != '(')
 				strncat(str, space, 1);
 			if (*infix == '+' || *infix == '-') 
@@ -170,7 +155,6 @@ char *postfix(char *infix)
 				else if (top_(head) == '-')
 				{
 					*temp = pop_(&head);
-					//strncat(str, space, 1);
 					strncat(str, temp, 1);
 					strncat(str, space, 1);
 					push_(&head, *infix);
@@ -184,12 +168,9 @@ char *postfix(char *infix)
 				{
 					while (top_(head) == '*' || top_(head) == '-')
 					{
-						//printf("%c\n", top(head));
 						*temp = pop_(&head);
-						//strncat(str, space, 1);
 						strncat(str,temp,1);
 						strncat(str,space,1);
-						//push(&head, *infix);
 					}
 					push_(&head, *infix);
 				}
@@ -212,43 +193,11 @@ char *postfix(char *infix)
 						*temp = pop_(&head);
 						strncat(str, temp, 1);
 						strncat(str, space, 1);
-						//pop_(&head);
 					}
 					*temp = pop_(&head);
-					printf("%c\n", *temp);
 				}
 			}
-			/*
-			else if (*infix == '(') 
-				push(&head, *infix);
-			else if (*infix == ')')
-			{
-				while (top(head) != '(')
-				{
-					*temp = top(head);
-					pop(&head);
-					strncat(str,temp,1);
-					strncat(str,space,1);
-
-				}
-				pop(&head);
-			}
-			*/
 		}
-		/*
-		if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point == 0)
-		{
-			strcat(str, ". ");
-			push_(&head, '*');
-			*temp = '*';
-		}
-		else if ((*infix >= 48 && *infix < 58) && infix[1] == '(' && point != 0)
-		{
-			strcat(str, " ");
-			push_(&head, '*');
-			*temp = '*';
-		}
-		*/
 		if ((*infix >= 48 && *infix < 58) && infix[1] == '(')
 		{
 			strcat(str, " ");
@@ -276,10 +225,6 @@ char *postfix(char *infix)
 		infix++;
 		display_(head);
 	}
-	/*
-	if (point == 0 && *temp != '(')
-		strcat(str, ".");
-	*/
 	if (*temp != '(')
 		strncat(str, space, 1);
 	while (!empty_(head)) 
@@ -288,9 +233,7 @@ char *postfix(char *infix)
 		pop_(&head);
 		strncat(str,temp,1);
 		strncat(str,space,1);
-		printf("%s\n", str);
 	}
-	//free(str);
 	return str;
 }
 
@@ -304,10 +247,6 @@ int main(int argc, char* argv[])
 		space_exception();
 	fclose(OP);
 	exception(result);
-	printf("%s\n", result);
 	total = postfix(result);
 	Array_Sum(total);
-	//scanf(" %s", result);
-	//char* total = postfix(result);
-	//Array_Sum(total);
 }

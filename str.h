@@ -10,6 +10,7 @@ typedef struct Node {
 void space_exception();
 void exception(char *);
 char *postfix(char *infix);
+int Find_Point(char*);
 struct Node;
 typedef struct Node string_node;
 string_node* new_node(char* data);
@@ -23,10 +24,8 @@ char* minus(char*, char*, char);
 char* multiply(char*, char*, char, char);
 char* calc(char*, char*, char);
 int Operator_Count(char* ary);
-int Find_Point(char* ary);
 char* Clear(char* a);
 char* Round(char* ary, int max_point);
-char* Change_str(char* a);
 void Array_Sum(char* Num);
 struct node;
 struct node* new_node_(int data);
@@ -35,4 +34,3 @@ void push_(struct node** head, int data);
 int pop_(struct node** head);
 int top_(struct node* head);
 void display_(struct node* head);
-

@@ -59,8 +59,6 @@ char* calc(char * first_Num, char* second_Num,  char oper)
 	int second_point = 0;
 	first_point = find_point(first_Num);
 	second_point = find_point(second_Num);
-	printf("%ld %ld\n", strlen(first_Num), strlen(second_Num));
-	printf("%s\n%s\n", first_Num, second_Num);
 	if (first_point != 1)
 	{
 		temp = (char*)malloc(strlen(first_Num)+2);
@@ -81,8 +79,6 @@ char* calc(char * first_Num, char* second_Num,  char oper)
         strcpy(second_Num, temp);
  		free(temp);
 	}
-	printf("%s\n%s\n", first_Num, second_Num);
-	printf("%ld %ld\n", strlen(first_Num), strlen(second_Num));
 	if (first_Num[0] == '-')
 	{
 		first_sign = '-';
@@ -110,20 +106,6 @@ char* calc(char * first_Num, char* second_Num,  char oper)
 		else
 			total = add(first_Num, second_Num, first_sign);
 	}
-	/*
-		else
-			total = minus(first_Num, second_Num, sign);
-	}
-	else if (oper == '-')
-	{
-		if (sign == '+')
-			total = minus(first_Num, second_Num, sign);
-		else
-			total = add(first_Num, second_Num, sign);
-	}
-	else if (oper == '*')
-		total = multiply(first_Num, second_Num, sign);
-	*/
 	return total;
 }
 
@@ -169,7 +151,6 @@ char* add(char* first_Num, char* second_Num, char first_sign)
 		temp2[0] = '-';
 		strcat(temp2, total);
 		free(temp);
-		//total = temp2;
 		total = Clear(temp2);
 	}
 	else
@@ -327,7 +308,6 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
 		}
 	}
 	temp[max_integer + max_point_num + 1] = '\0';
-	printf("%s\n", temp);
     if (first_sign == '-')
     {
         total = Round(temp, max_point);
@@ -335,12 +315,12 @@ char* minus(char* first_Num, char* second_Num, char first_sign)
         temp2[0] = '-';
         strcat(temp2, total);
         free(temp);
-		//total = temp2;
         total = Clear(temp2);
-        //total = Round(temp2, max_point+1);
     }
     else
+	{
         total = Clear(Round(temp, max_point));
+	}
     return total;
 }
 
@@ -358,17 +338,12 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 
     int first_integer = first_count - (first_count - first_point);
     int second_integer = second_count - (second_count - second_point);
-	/*
-    int max_integer = (first_count - (first_count - first_point)) > (second_count - (second_count - second_point)) ? first_count - (first_count - first_point) : second_count - (second_count - second_point);
-    int max_point = first_point > second_point ? first_point : second_point;
-    int max_point_num = first_count - first_point - 1 > second_count - second_point - 1 ? first_count - first_point - 1 : second_count - second_point - 1;
-*/
 	temp = (char*)malloc(first_integer+second_integer+(first_count-first_point-1)+(second_count-second_point-1)+2);
-	//temp[first_integer+second_integer+(first_count-first_point-1)+(second_count-second_point-1)+1] = '\0';
+
 	for(int i = 0; i < first_integer+second_integer+(first_count-first_point-1)+(second_count-second_point-1)+1; i++)
 		temp[i] = '0';
+
 	temp[first_integer+second_integer] = '.';
-	printf("%s\n", temp);
 	int num;
 	int cnt = 0;
 	int main_cnt = 0;
@@ -384,7 +359,6 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 			num = (first_Num[i]-48) * (second_Num[s]-48);
 			if (temp[i+s+cnt-main_cnt] == '.')
 				main_cnt++;
-			printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
 			temp[i+s+cnt-main_cnt] += num%10;
 			if (temp[i+s+cnt-main_cnt-1] == '.')
 				temp[i+s+cnt-main_cnt-2] += num/10;
@@ -395,11 +369,7 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 		if (i+(strlen(second_Num)-1)+cnt > first_point+second_point)
             main_cnt = 0;
 		temp = temp_Round(temp, first_point+second_point);
-		printf("%s\n", temp);
-		//cnt = 0;
-		//main_cnt = 0;
 	}
-	printf("정수 부분\n");
 	main_cnt = 0;
 	cnt = 1;
 	int gap = (first_integer > second_integer) ? first_integer-second_integer : second_integer-first_integer;
@@ -416,7 +386,6 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
             if (temp[i+s+cnt-main_cnt] == '.' && main_cnt == 0)
                 main_cnt++;
 
-            printf("i : %d, s : %d, num : %d, main_cnt : %d, index : %d\n", i, s, num, main_cnt, i+s+cnt-main_cnt);
 			if (temp[i+s+cnt-main_cnt] == '.')
 				temp[i+s+cnt-main_cnt-1] += num%10;
 			else
@@ -429,14 +398,8 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
 		if (i > first_point)
 			main_cnt = 0;
 		temp = temp_Round(temp, first_point+second_point);
-		printf("%s\n", temp);
-        //cnt = 0;
-        //main_cnt = 0;
     }
 
-	printf("%s\n", temp);
-	
-	// 미완
 	if (first_sign != second_sign)
     {
         total = Round(temp, first_integer+second_integer);
@@ -445,7 +408,6 @@ char* multiply(char* first_Num, char* second_Num, char first_sign, char second_s
         strcat(temp2, total);
         free(temp);
         total = Clear(temp2);
-        //total = Round(temp2, max_point+1);
     }
     else
         total = Clear(Round(temp, first_integer+second_integer));

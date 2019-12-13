@@ -18,7 +18,6 @@ struct node* new_node_(int data)
 int empty_(struct node* head) 
 { 
 	if(!head){ 
-		printf("stack is empty\n");
 		return 1;
 	}
 	return 0; 
@@ -29,7 +28,6 @@ void push_(struct node** head, int data)
 	struct node* temp_node = new_node_(data); 
 	temp_node->next = *head; 
 	*head = temp_node; 
-	printf("PUSH: [%c]\n", data);
 } 
 
 int pop_(struct node** head) 
@@ -42,7 +40,6 @@ int pop_(struct node** head)
 	int element = temp->data; 
 	free(temp); 
 
-	printf("POP: [%c]\n", element);
 	return element; 
 } 
 
@@ -61,11 +58,8 @@ void display_(struct node* head){
 	struct node* cursor = NULL;
 	cursor = head;
 
-	printf("STACK:");
 	while (cursor != NULL) {
-		printf(" [%c]", cursor->data);
 		cursor = cursor->next;
 	}
-	printf("\n");
 	return;
 }
